@@ -16,11 +16,10 @@ class App extends React.Component {
             {title: "JS", isDone: true, priority: "priority: hi"},
             {title: "React", isDone: true, priority: "priority: hi"},
             {title: "HTML", isDone: true, priority: "priority: hi"},
-            {title: "CSS", isDone: true, priority: "priority: hi"},
+            {title: "CSS", isDone: false, priority: "priority: hi"},
         ],
     filterValue: "Completed"
 }
-
 onAddTaskClick = () => {
         let newText = this.newTaskTitleRef.current.value;
         let newTask = {
@@ -28,15 +27,15 @@ onAddTaskClick = () => {
         isDone: true,
         priority: "priority hi"
     };
-
     let newTasks = [...this.state.tasks, newTask];
     this.newTaskTitleRef.current.value = "";
     this.setState ( {
         tasks: newTasks
-    });
-
-}
-
+    })
+};
+    changeFilter = (newFilterValue) => {
+        this.setState( {filterValue: newFilterValue})
+    };
     render = () => {
         return (
             <div className="App">
@@ -48,8 +47,18 @@ onAddTaskClick = () => {
                             <button onClick={this.onAddTaskClick}>Add</button>
                         </div>
                     </div>
-                    <TodoListTasks tasks={this.state.tasks}/>
-                    <TodoListFooter filterValue={this.state.filterValue}/>
+                    <TodoListTasks tasks={this.state.tasks.filter(t => {
+                        if (this.state.filterValue === "All") {
+                            return true
+                        }
+                        if (this.state.filterValue === "Active") {
+                            return (t.isDone === false)
+                        }
+                        if (this.state.filterValue === "Completed") {
+                            return (t.isDone === true)
+                        }
+                    })}/>
+                    <TodoListFooter changeFilter={this.changeFilter} filterValue={this.state.filterValue}/>
                 </div>
             </div>
         );
