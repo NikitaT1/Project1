@@ -5,19 +5,23 @@ import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 
 class App extends React.Component {
+    tasks = [
+        {title: "JS", isDone: true, priority: "priority: hi"},
+        {title: "React", isDone: true, priority: "priority: hi"},
+        {title: "HTML", isDone: true, priority: "priority: hi"},
+        {title: "CSS", isDone: true, priority: "priority: hi"},
+    ];
+
+    filterValue="Completed";
+
     render = () => {
-        let tasks = [
-            {title: "JS", isDone: true},
-            {title: "React", isDone: true},
-            {title: "HTML", isDone: true},
-            {title: "CSS", isDone: true},
-        ]
+
         return (
             <div className="App">
                 <div className="todoList">
-                    <TodoListHeader tasks={tasks}/>
-                    <TodoListTasks tasks={tasks}/>
-                    <TodoListFooter tasks={tasks}/>
+                    <TodoListHeader/>
+                    <TodoListTasks tasks={this.tasks}/>
+                    <TodoListFooter filterValue={this.filterValue}/>
                 </div>
             </div>
         );
