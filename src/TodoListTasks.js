@@ -4,13 +4,14 @@ import TodoListTask from "./TodoListTask";
 
 class TodoListTasks extends React.Component {
     render = () => {
+
         return (
 
                     <div className="todoList-tasks">
-                        <TodoListTask title="JS" isDone={true}/>
-                        <TodoListTask title="React" isDone={true}/>
-                        <TodoListTask title="HTML" isDone={true}/>
-                        <TodoListTask title="CSS" isDone={true}/>
+                        <TodoListTask title={this.props.tasks[0].title} isDone={this.props.tasks[0].isDone}/>
+                        <TodoListTask title={this.props.tasks[1].title} isDone={this.props.tasks[1].isDone}/>
+                        <TodoListTask title={this.props.tasks[2].title} isDone={this.props.tasks[2].isDone}/>
+                        <TodoListTask title={this.props.tasks[3].title} isDone={this.props.tasks[3].isDone}/>
                     </div>
 
         );
