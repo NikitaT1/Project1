@@ -4,7 +4,7 @@ import './App.css';
 class TodoListFooter extends React.Component {
 
     state = {
-        isHidden: true
+        isHidden: false
     }
 
     changeFiltersClick = (isHidden) => {

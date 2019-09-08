@@ -18,7 +18,7 @@ class App extends React.Component {
             {title: "HTML", isDone: true, priority: "priority: hi"},
             {title: "CSS", isDone: false, priority: "priority: hi"},
         ],
-    filterValue: "Completed"
+    filterValue: "All"
 }
 
 addTask = (newText) => {
