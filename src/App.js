@@ -11,22 +11,26 @@ class App extends React.Component {
         super (props);
     }
 
+    nextTaskId = 4;
+
     state = {
         tasks: [
-            {title: "JS", isDone: true, priority: "priority: hi"},
-            {title: "React", isDone: true, priority: "priority: hi"},
-            {title: "HTML", isDone: true, priority: "priority: hi"},
-            {title: "CSS", isDone: false, priority: "priority: hi"},
+            {id: 0, title: "JS", isDone: true, priority: "priority: hi"},
+            {id: 1, title: "React", isDone: true, priority: "priority: hi"},
+            {id: 2, title: "HTML", isDone: true, priority: "priority: hi"},
+            {id: 3, title: "CSS", isDone: false, priority: "priority: hi"},
         ],
     filterValue: "All"
 }
 
 addTask = (newText) => {
         let newTask = {
+        id: this.nextTaskId,
         title: newText,
         isDone: true,
         priority: "priority hi"
     };
+    this.nextTaskId++;
     let newTasks = [...this.state.tasks, newTask];
     this.setState ( {
         tasks: newTasks
@@ -36,9 +40,9 @@ addTask = (newText) => {
         this.setState( {filterValue: newFilterValue})
     };
 
-    changeStatus = (task, isDone) => {
+    changeStatus = (taskId, isDone) => {
         let newTasks = this.state.tasks.map (t=> {
-            if ( t != task) {
+            if ( t.id != taskId) {
                 return t;
             }
             else {
@@ -50,12 +54,26 @@ addTask = (newText) => {
         })
     }
 
+    changeTitle = (title, taskId) => {
+        let taskCopy = this.state.tasks.map (t=> {
+            if ( t.id == taskId) {
+                return {...t, title: title};
+            }
+            return t;
+        });
+        this.setState ({
+            tasks: taskCopy
+        });
+    }
+
+
+
     render = () => {
         return (
             <div className="App">
                 <div className="todoList">
                     <TodoListHeader addTask={this.addTask} />
-                    <TodoListTasks changeStatus={this.changeStatus}
+                    <TodoListTasks changeStatus={this.changeStatus} changeTitle={this.changeTitle}
                         tasks={this.state.tasks.filter(t => {
                         if (this.state.filterValue === "All") {
                             return true

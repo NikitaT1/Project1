@@ -3,14 +3,10 @@ import './App.css';
 
 class TodoListHeader extends React.Component {
 
-    constructor (props) {
-        super (props)
-    }
-
     state = {
         error: false,
         title: " "
-    }
+    };
 
     onAddTaskClick = () => {
         let newText = this.state.title;
@@ -32,11 +28,7 @@ class TodoListHeader extends React.Component {
 
     onTitleChanged = (e) => {
         this.setState({title: e.currentTarget.value})
-    }
-
-
-
-
+    };
 
     render = () => {
         let classForAll = this.state.error === true ? "error" : "";
