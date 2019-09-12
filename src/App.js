@@ -40,32 +40,33 @@ addTask = (newText) => {
         this.setState( {filterValue: newFilterValue})
     };
 
-    changeStatus = (taskId, isDone) => {
+    changeTask = (taskId, object) => {
         let newTasks = this.state.tasks.map (t=> {
-            if ( t.id != taskId) {
-                return t;
+            if (t.id == taskId) {
+                return {...t, ...object};
             }
             else {
-                return {...t, isDone: isDone};
+                return t
             }
-        })
+        });
         this.setState ({
             tasks:newTasks
         })
-    }
+    };
 
-    changeTitle = (title, taskId) => {
-        let taskCopy = this.state.tasks.map (t=> {
-            if ( t.id == taskId) {
-                return {...t, title: title};
-            }
-            return t;
-        });
-        this.setState ({
-            tasks: taskCopy
-        });
-    }
+    changeStatus = (taskId, isDone) => {
+        let object = {isDone: isDone};
+        this.changeTask (taskId, object)
+    };
 
+    /*changeTitle = (taskId, title) => {
+        this.changeTask (taskId, {title: title})
+    };*/
+
+    changeTitle = (taskId, title) => {
+        let object = {title: title};
+        this.changeTask (taskId, object)
+    };
 
 
     render = () => {

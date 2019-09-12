@@ -21,7 +21,7 @@ class TodoListTask extends React.Component {
 
     onTitleChanged = (e) => {
         debugger;
-        this.props.changeTitle (e.currentTarget.value, this.props.task.id)
+        this.props.changeTitle (this.props.task.id, e.currentTarget.value)
     };
 
 
