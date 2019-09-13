@@ -11,17 +11,38 @@ class App extends React.Component {
         super (props);
     }
 
-    nextTaskId = 4;
+    componentDidMount() {
+        this.restoreState();
+    }
 
     state = {
-        tasks: [
-            {id: 0, title: "JS", isDone: true, priority: "priority: hi"},
-            {id: 1, title: "React", isDone: true, priority: "priority: hi"},
-            {id: 2, title: "HTML", isDone: true, priority: "priority: hi"},
-            {id: 3, title: "CSS", isDone: false, priority: "priority: hi"},
-        ],
-    filterValue: "All"
-}
+        tasks: [],
+        filterValue: "All"
+    };
+
+
+    saveState = () => {
+        let stateAsString = JSON.stringify(this.state);
+        localStorage.setItem("our-state", stateAsString);
+    };
+
+    restoreState = () => {
+
+        let stateAsString = localStorage.getItem("our-state");
+        if(stateAsString) {
+            let state = JSON.parse(stateAsString);
+
+            state.tasks.forEach(t => {
+                if (t.id >= this.nextTaskId) {
+                    this.nextTaskId = t.id+ 1;
+                }
+            })
+            this.setState(state);
+        }
+    };
+
+    nextTaskId = 0;
+
 
 addTask = (newText) => {
         let newTask = {
@@ -34,7 +55,9 @@ addTask = (newText) => {
     let newTasks = [...this.state.tasks, newTask];
     this.setState ( {
         tasks: newTasks
-    })
+    }, ()=>{
+        this.saveState();
+    } );
 };
     changeFilter = (newFilterValue) => {
         this.setState( {filterValue: newFilterValue})
@@ -70,6 +93,7 @@ addTask = (newText) => {
 
 
     render = () => {
+
         return (
             <div className="App">
                 <div className="todoList">
