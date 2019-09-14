@@ -36,7 +36,7 @@ class App extends React.Component {
                 if (t.id >= this.nextTaskId) {
                     this.nextTaskId = t.id+ 1;
                 }
-            })
+            });
             this.setState(state);
         }
     };
@@ -82,9 +82,6 @@ addTask = (newText) => {
         this.changeTask (taskId, object)
     };
 
-    /*changeTitle = (taskId, title) => {
-        this.changeTask (taskId, {title: title})
-    };*/
 
     changeTitle = (taskId, title) => {
         let object = {title: title};

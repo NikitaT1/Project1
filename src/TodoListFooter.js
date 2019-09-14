@@ -5,7 +5,7 @@ class TodoListFooter extends React.Component {
 
     state = {
         isHidden: false
-    }
+    };
 
     changeFiltersClick = (isHidden) => {
         if (this.state.isHidden === true) {
@@ -17,7 +17,7 @@ class TodoListFooter extends React.Component {
 
     onAllFilterClick = () => {this.props.changeFilter("All")};
     onCompletedFilterClick = () => {this.props.changeFilter("Completed")};
-    onActiveFilterClick = () => {this.props.changeFilter("Active")}
+    onActiveFilterClick = () => {this.props.changeFilter("Active")};
 
 
     render = (props) => {
@@ -28,9 +28,6 @@ class TodoListFooter extends React.Component {
 
         /*let hide = this.state.isHidden === true ? "filter-active" : "";
         let nichtHide = this.state.isHidden === false ? "filter-active" : "";*/
-
-
-
 
 
 
