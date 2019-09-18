@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
-/*import TodoListHeader from "./TodoListHeader";*/
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
-import TodoListHeader from "./TodoListHeader";
+import AddNewItemForm from "./AddNewItemForm";
 
 class TodoList extends React.Component {
 
@@ -93,7 +92,7 @@ addTask = (newText) => {
 
         return (
                 <div className="todoList">
-                    <TodoListHeader addTask={this.addTask} />
+                    <AddNewItemForm addTask={this.addTask} title={this.props.title} />
                     <TodoListTasks changeStatus={this.changeStatus} changeTitle={this.changeTitle}
                         tasks={this.state.tasks.filter(t => {
                         if (this.state.filterValue === "All") {

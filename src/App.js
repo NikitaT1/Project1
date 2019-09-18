@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
-import TodoListHeader from "./TodoListHeader";
+import AddNewItemForm from "./AddNewItemForm";
 import TodoList from "./TodoList";
 
 class App extends React.Component {
@@ -10,7 +10,7 @@ class App extends React.Component {
     state = {
         TodoList: [
             {id: 1, title: "One"},
-            {id: 1, title: "One"}
+            {id: 2, title: "Two"}
         ]
     };
 
@@ -20,7 +20,7 @@ class App extends React.Component {
 
         return (
             <div>
-                <input/>
+                <input />
                 <button onClick={this.addTodoList}>Add </button>
 
             <div className="App">
