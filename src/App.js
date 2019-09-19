@@ -8,25 +8,29 @@ import TodoList from "./TodoList";
 class App extends React.Component {
 
     state = {
-        TodoList: [
-            {id: 1, title: "One"},
-            {id: 2, title: "Two"}
-        ]
+        todolists: [{
+            id: 1, title: "One"},
+            {id: 2, title: "Two"}]
     };
+
+    addTodoList = (title) => {
+        this.setState({todolists: [...this.state.todolists, {title: title}]
+        })
+    }
 
     render = () => {
 
-        const todolists = this.state.TodoList.map( tl => <TodoList id={tl.id} title={tl.title}/>)
+        const todolists = this.state.todolists.map( tl => <TodoList id={tl.id} title={tl.title}/>)
 
         return (
+            <>
             <div>
-                <input />
-                <button onClick={this.addTodoList}>Add </button>
-
+                <AddNewItemForm addItem={this.addTodoList}/>
+                </div>
             <div className="App">
                 {todolists}
             </div>
-            </div>
+</>
         );
     }
 }
