@@ -5,7 +5,7 @@ class AddNewItemForm extends React.Component {
 
     state = {
         error: false,
-        title: "yo"
+        title: ""
     }
 
     onKeyPress = (e) => {
@@ -37,9 +37,9 @@ class AddNewItemForm extends React.Component {
 
         return (
 
-            <div className="todoList-newTaskForm">
+            <div className="newItemForm">
                 <input type="text" placeholder="New task name"
-                      /* className={classForAll}*/
+                      className={classNameForInput}
                        onKeyPress={this.onKeyPress}
                        value={this.state.title}
                        onChange={this.onTitleChanged}/>
