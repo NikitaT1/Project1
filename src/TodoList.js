@@ -3,7 +3,7 @@ import './App.css';
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 import TodoListHeader from "./TodoListHeader";
-import AddNewItemForm from "./AddNewItemForm";
+
 
 class TodoList extends React.Component {
 
@@ -14,11 +14,6 @@ class TodoList extends React.Component {
     componentDidMount() {
         this.restoreState();
     }
-
-    state = {
-        tasks: [],
-        filterValue: "All"
-    };
 
 
     saveState = () => {
@@ -43,6 +38,11 @@ class TodoList extends React.Component {
 
     nextTaskId = 0;
 
+    state = {
+        tasks: [],
+        filterValue: "All"
+    };
+
 
 addTask = (newText) => {
         let newTask = {
@@ -60,22 +60,25 @@ addTask = (newText) => {
     } );
 };
     changeFilter = (newFilterValue) => {
-        this.setState( {filterValue: newFilterValue})
+        this.setState( {filterValue: newFilterValue},
+            ()=>{this.saveState(); });
     };
 
-    changeTask = (taskId, object) => {
-        let newTasks = this.state.tasks.map (t=> {
-            if (t.id == taskId) {
-                return {...t, ...object};
+    changeTask = (taskId, obj) => {
+        debugger
+        let newTasks = this.state.tasks.map(t => {
+            if (t.id != taskId) {
+                return t;
             }
             else {
-                return t
+                return {...t, ...obj};
             }
         });
-        this.setState ({
-            tasks:newTasks
-        })
-    };
+
+        this.setState({
+            tasks: newTasks
+        }, () => { this.saveState(); });
+    }
 
     changeStatus = (taskId, isDone) => {
         let object = {isDone: isDone};
@@ -94,7 +97,7 @@ addTask = (newText) => {
         return (
                 <div className="todoList">
                         <TodoListHeader addTask={this.addTask} title={this.props.title}/>
-                        {/*<AddNewItemForm addItem={this.addTask} />*/}
+
                     <TodoListTasks changeStatus={this.changeStatus} changeTitle={this.changeTitle}
                         tasks={this.state.tasks.filter(t => {
                         if (this.state.filterValue === "All") {

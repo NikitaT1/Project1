@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import AddNewItemForm from "./AddNewItemForm";
 import TodoListTitle from "./TodoListTitle";
+import AddNewItemForm from "./AddNewItemForm";
 
 class TodoListHeader extends React.Component {
 
@@ -12,9 +12,10 @@ class TodoListHeader extends React.Component {
 
         return (
             <div className="todoList-header">
-                <h3 className="todoList-header__title">{this.props.title}</h3>
-                <TodoListTitle/>
-            </div>
+                <TodoListTitle title={this.props.title}/>
+                    <AddNewItemForm addItem={this.props.addTodoList}/>
+                </div>
+
         );
     }
 }

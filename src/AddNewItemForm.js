@@ -8,44 +8,47 @@ class AddNewItemForm extends React.Component {
         title: ""
     }
 
-    onKeyPress = (e) => {
-        if (e.key === "Enter") {
-            this.onAddTaskClick()
+    onAddItemButtonClick = () => {
+        let newText = this.state.title;
+        this.setState({title: ""});
+        if (newText === "") {
+            this.setState({error: true});
+        } else {
+            this.setState({error: false});
+            // передаём новый текст наружу
+            this.props.addItem(newText);
         }
-    };
-
-    onTitleChanged = (e) => {
-        this.setState({title: e.currentTarget.value})
     }
 
+    onTitleChanged = (e) => {
+        this.setState({
+            error: false,
+            title: e.currentTarget.value
+        });
+    }
 
-    onAddTaskClick = () => {
-        let newText = this.state.title;
-        this.state.title = "";
-        if (newText === "") {
-            this.setState({error: true})
-        } else {
-            this.props.addItem(newText);
-            this.setState({error: false})
+    onKeyPress = (e) => {
+        if (e.key === "Enter") {
+            this.onAddItemButtonClick()
         }
-    };
+    }
+
 
 
     render = () => {
 
-        let classNameForInput = this.state.error ? "error" : "";
+        const classNameForInput = this.state.error ? "error" : "";
 
         return (
-
             <div className="newItemForm">
-                <input type="text" placeholder="New task name"
-                      className={classNameForInput}
+                <input className={classNameForInput} type="text" placeholder="New item name"
+                       onChange={this.onTitleChanged}
                        onKeyPress={this.onKeyPress}
-                       value={this.state.title}
-                       onChange={this.onTitleChanged}/>
-                <button onClick={this.onAddTaskClick}>Add</button>
+                       value={this.state.title}/>
+                <button onClick={this.onAddItemButtonClick}>Add</button>
             </div>
         )
+
     }
 }
 
