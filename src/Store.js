@@ -29,7 +29,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ... state,
                 todoLists: state.todoLists.map (todolist => {
-                    if (todolist.id === action.taskId) {
+                    if (todolist.id === action.todolistId) {
                         return{... todolist,
                             tasks: todolist.tasks.map(task=> {
                                 if (task.id === action.taskId) {
