@@ -1,74 +1,60 @@
 import React from 'react';
 import './App.css';
-import TodoListTasks from "./TodoListTasks";
-import TodoListFooter from "./TodoListFooter";
-import AddNewItemForm from "./AddNewItemForm";
 import TodoList from "./TodoList";
+import AddNewItemForm from "./AddNewItemForm";
+import connect from "react-redux/lib/connect/connect";
 
 class App extends React.Component {
 
-    state = {
-        todolists: [{
-            id: 1, title: "What to learn"
-        },
-            {id:2, title: "List 2"}]
-    };
+    nextTaskId = 0;
 
-    nextItemId = 0;
 
-    addTodolist = (title) => {
-        let newItem = {
-            id: this.nextItemId,
-            title: title,
+    onTitleAdded = (newText) => {
+        let newTodolist = {
+            id: this.nextTaskId,
+            title: newText,
+            tasks: []
         };
-        this.nextItemId++;
-
-
-        this.setState ({
-            todolists: [...this.state.todolists, newItem]
-        }, () => {
-            this.saveState();
-        });
-    };
-    componentDidMount() {
-        this.restoreState();
+        this.props.addTodo(newTodolist)
+        this.nextTaskId++
     }
 
-    saveState = () => {
-        let stateAsString = JSON.stringify(this.state);
-        localStorage.setItem("todoLists", stateAsString);
-    }
-
-    restoreState = () => {
-        let stateAsString = localStorage.getItem("todoLists");
-        if (stateAsString) {
-            let state = JSON.parse(stateAsString);
-
-            state.todolists.forEach(t => {
-                if (t.id >= this.nextItemId) {
-                    this.nextItemId = t.id + 1;
-                }
-            });
-            this.setState(state);
-        }
-    }
 
     render = () => {
 
-        let todolists = this.state.todolists.map(tl=> <TodoList id={tl.id} title={tl.title}/>)
+        const todoLists = this.props.todoLists.map (t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
 
         return (
             <>
                 <div>
-                    <AddNewItemForm addItem={this.addTodolist} />
+                    <AddNewItemForm addItem={this.onTitleAdded}/>
                 </div>
                 <div className="App">
-                    {todolists}
+                    {todoLists}
                 </div>
             </>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        todoLists: state.todoLists
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodo: (newTodolist) => {
+            const action = {
+                type: "ADD-TODOLIST",
+                newTodolist: newTodolist
+            };
+
+            dispatch(action)
+        }
+    }
+}
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+export default ConnectedApp;
 

@@ -1,58 +1,52 @@
 import React from 'react';
-import './App.css';
+
 
 class AddNewItemForm extends React.Component {
 
     state = {
         error: false,
         title: ""
-    }
+    };
 
-    onAddItemButtonClick = () => {
+
+    onAddItemClick = () => {
         let newText = this.state.title;
-        this.setState({title: ""});
         if (newText === "") {
-            this.setState({error: true});
-        } else {
-            this.setState({error: false});
-            // передаём новый текст наружу
-            this.props.addItem(newText);
+            this.setState({error: true})
         }
-    }
+        else {this.setState({error: false, title: ""})}
+        this.props.addItem(newText);
+
+    };
 
     onTitleChanged = (e) => {
-        this.setState({
-            error: false,
-            title: e.currentTarget.value
-        });
+        this.setState({error: false,
+            title: e.currentTarget.value})
+
     }
 
-    onKeyPress = (e) => {
+    onKeyPress= (e)=> {
         if (e.key === "Enter") {
-            this.onAddItemButtonClick()
+            this.onAddItemClick()
         }
     }
-
-
 
     render = () => {
 
-        const classNameForInput = this.state.error ? "error" : "";
+        let error = this.state.error ? "error" : "";
 
         return (
-            <div className="newItemForm">
-                <input className={classNameForInput} type="text" placeholder="New item name"
-                       onChange={this.onTitleChanged}
-                       onKeyPress={this.onKeyPress}
-                       value={this.state.title}/>
-                <button onClick={this.onAddItemButtonClick}>Add</button>
+            <div className="todoList-newTaskForm">
+                <input type="text" placeholder="New task name" className={error} onChange={this.onTitleChanged}
+                       onKeyPress={this.onKeyPress} value={this.state.title}/>
+                <button onClick={this.onAddItemClick}>Add</button>
             </div>
-        )
 
+        )
     }
 }
 
-export default AddNewItemForm;
+export default AddNewItemForm
 
 
 

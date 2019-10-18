@@ -1,72 +1,51 @@
 import React from 'react';
 import './App.css';
+import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
-import TodoListHeader from "./TodoListHeader";
-
+import connect from "react-redux/lib/connect/connect";
 
 class TodoList extends React.Component {
 
-    constructor (props) {
-        super (props);
-    }
-
-    componentDidMount() {
-        this.restoreState();
-    }
-
-
-    saveState = () => {
-        let stateAsString = JSON.stringify(this.state);
-        localStorage.setItem("our-state" + this.props.id, stateAsString);
-    };
-
-    restoreState = () => {
-
-        let stateAsString = localStorage.getItem("our-state" + this.props.id);
-        if(stateAsString) {
-            let state = JSON.parse(stateAsString);
-
-            state.tasks.forEach(t => {
-                if (t.id >= this.nextTaskId) {
-                    this.nextTaskId = t.id+ 1;
-                }
-            });
-            this.setState(state);
-        }
+    constructor(props) {
+        super(props);
+        this.newTasksTitileRef = React.createRef();
     };
 
     nextTaskId = 0;
 
     state = {
-        tasks: [],
         filterValue: "All"
     };
 
-
-addTask = (newText) => {
+    onTaskAdded = (newText) => {
         let newTask = {
-        id: this.nextTaskId,
-        title: newText,
-        isDone: true,
-        priority: "priority hi"
-    };
-    this.nextTaskId++;
-    let newTasks = [...this.state.tasks, newTask];
-    this.setState ( {
-        tasks: newTasks
-    }, ()=>{
-        this.saveState();
-    } );
-};
-    changeFilter = (newFilterValue) => {
-        this.setState( {filterValue: newFilterValue},
-            ()=>{this.saveState(); });
+            id: this.nextTaskId,
+            title: newText,
+            isDone: false,
+            priority: "low"
+        };
+        this.nextTaskId++;
+        this.props.addTask(newTask, this.props.id)
+    }
+
+    onFilterChanged = (newFilterValue) => {
+        this.setState( {
+            filterValue: newFilterValue
+        } );
+    }
+
+    onTaskStatusChanged = (isDone, taskId) => {
+        this.changeTask({isDone:isDone}, taskId)
     };
 
-    changeTask = (taskId, obj) => {
-        debugger
-        let newTasks = this.state.tasks.map(t => {
+    onTaskTitleChanged = (title, taskId) => {
+        this.changeTask({title:title}, taskId)
+    };
+
+    changeTask = (obj, taskId) => {
+        this.props.changeTask (obj, taskId, this.props.id)
+        /*let newTasks = this.state.tasks.map(t => {
             if (t.id != taskId) {
                 return t;
             }
@@ -74,47 +53,49 @@ addTask = (newText) => {
                 return {...t, ...obj};
             }
         });
-
         this.setState({
             tasks: newTasks
-        }, () => { this.saveState(); });
-    }
-
-    changeStatus = (taskId, isDone) => {
-        let object = {isDone: isDone};
-        this.changeTask (taskId, object)
+        }, () => {this.saveState()})*/
     };
-
-
-    changeTitle = (taskId, title) => {
-        let object = {title: title};
-        this.changeTask (taskId, object)
-    };
-
 
     render = () => {
 
         return (
-                <div className="todoList">
-                        <TodoListHeader addTask={this.addTask} title={this.props.title}/>
-
-                    <TodoListTasks changeStatus={this.changeStatus} changeTitle={this.changeTitle}
-                        tasks={this.state.tasks.filter(t => {
-                        if (this.state.filterValue === "All") {
-                            return true
-                        }
-                        if (this.state.filterValue === "Active") {
-                            return (t.isDone === false)
-                        }
-                        if (this.state.filterValue === "Completed") {
-                            return (t.isDone === true)
-                        }
-                    })}/>
-                    <TodoListFooter changeFilter={this.changeFilter} filterValue={this.state.filterValue}/>
-                </div>
+            <div className="todoList">
+                <TodoListHeader onTaskAdded={this.onTaskAdded} title={this.props.title}  />
+                <TodoListTasks onTaskStatusChanged={this.onTaskStatusChanged} onTaskTitleChanged={this.onTaskTitleChanged}
+                               tasks={this.props.tasks.filter(t => {
+                                   if (this.state.filterValue === "All") {
+                                       return true;
+                                   }
+                                   if (this.state.filterValue === "Active") {
+                                       return t.isDone === false;
+                                   }
+                                   if (this.state.filterValue === "Completed") {
+                                       return t.isDone === true;
+                                   }
+                               })}/>
+                <TodoListFooter onFilterChanged={this.onFilterChanged} filterValue={this.state.filterValue} />
+            </div>
         );
     }
 }
 
-export default TodoList;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTask (newTask, todolistId) {
+            const action = {type: "ADD-TASK", newTask, todolistId};
+            dispatch(action);
+        },
+        changeTask (obj, taskId, todolistId) {
+            const action = {type: "CHANGE-TASK", obj, taskId, todolistId};
+            dispatch(action);
+        }
+    }
+}
 
+
+
+const ConnectedTodoList = connect(null, mapDispatchToProps) (TodoList)
+
+export default ConnectedTodoList;
