@@ -23,6 +23,10 @@ class TodoListTask extends React.Component {
         this.props.onTaskTitleChanged(e.currentTarget.value, this.props.task.id)
     };
 
+    delTask = () => {
+        this.props.delTaskCall(this.props.id, this.props.task.id)
+    }
+
 
 
 
@@ -38,7 +42,7 @@ class TodoListTask extends React.Component {
                                               autoFocus={true} value={this.props.task.title} onChange={this.onTitleChanged}/> :
                     <span onClick={this.activateEditMode}>
                     {this.props.task.id} - {this.props.task.title}</span>},
-                priority: {this.props.task.priority}
+                priority: {this.props.task.priority} <button onClick={this.delTask}>X</button>
             </div>
         );
     }

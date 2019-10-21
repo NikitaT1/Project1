@@ -1,9 +1,16 @@
 import {createStore} from "redux";
 
 const initialState = {
-    todoLists: [{id: 0, title: "React", tasks: [{id: 0, title: "new", isDone: false, priority: "low"}]},
-        {id: 1, title: "Redux", tasks: [{id: 1, title: "newOne", isDone: false, priority: "low"}]},
-        {id: 2, title: "JS", tasks: []}]
+    todoLists: [
+        {id: 0, title: "React", tasks: [
+            ]},
+        {id: 1, title: "Redux", tasks: [
+                {id: 1, title: "newOne", isDone: false, priority: "low"}
+            ]},
+        {id: 2, title: "JS", tasks: [
+                {id: 1, title: "newOne", isDone: false, priority: "low"}
+            ]}
+    ]
 }
 
 const reducer = (state = initialState, action) => {
@@ -42,25 +49,33 @@ const reducer = (state = initialState, action) => {
                         return todolist
                     }
                 })
-
-                /*    ...state,
-                    todoLists: state.todoLists.map(t => {
-                        if (t.id != action.taskId) {
-                            return t;
-                        } else {
-                            return {...t, tasks.map(t=> {
-                                if (t.id != action.taskId) {
-                                    return t;
-                                } else {
-                                    return [...t.tasks, ...action.obj]
-                                }
-                                })
+            }
+        }
+        case "DEL-TODOLIST": {
+            return {
+                ...state,
+                todoLists: state.todoLists.filter(t => t.id !== action.todolistId)
+            }
+        }
+        case "DEL_TASK": {
+            debugger
+            return {
+                ... state,
+                todoLists: state.todoLists.map (t => {
+                    if (t.id === action.todolistId) {
+                        return {...t,
+                            tasks: t.tasks.filter (task => task.id !== action.taskId)
                         }
-                    })*/
-
+                    }
+                    else {
+                        return t
+                    }
+                })
 
             }
         }
+
+
 
         default: return state
     }

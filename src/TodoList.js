@@ -45,25 +45,22 @@ class TodoList extends React.Component {
 
     changeTask = (obj, taskId) => {
         this.props.changeTask (obj, taskId, this.props.id)
-        /*let newTasks = this.state.tasks.map(t => {
-            if (t.id != taskId) {
-                return t;
-            }
-            else {
-                return {...t, ...obj};
-            }
-        });
-        this.setState({
-            tasks: newTasks
-        }, () => {this.saveState()})*/
     };
+
+    delTaskCall = (todolistId, taskId) => {
+        this.props.delTaskCall (todolistId, taskId)
+    }
+
+
+
 
     render = () => {
 
         return (
             <div className="todoList">
-                <TodoListHeader onTaskAdded={this.onTaskAdded} title={this.props.title}  />
-                <TodoListTasks onTaskStatusChanged={this.onTaskStatusChanged} onTaskTitleChanged={this.onTaskTitleChanged}
+                <TodoListHeader onTaskAdded={this.onTaskAdded} title={this.props.title} id={this.props.id} />
+                <TodoListTasks id={this.props.id} onTaskStatusChanged={this.onTaskStatusChanged}
+                               onTaskTitleChanged={this.onTaskTitleChanged} delTaskCall={this.delTaskCall}
                                tasks={this.props.tasks.filter(t => {
                                    if (this.state.filterValue === "All") {
                                        return true;
@@ -89,6 +86,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         changeTask (obj, taskId, todolistId) {
             const action = {type: "CHANGE-TASK", obj, taskId, todolistId};
+            dispatch(action);
+        },
+        delTaskCall (todolistId, taskId) {
+            const action = {type: "DEL_TASK", todolistId, taskId}
             dispatch(action);
         }
     }
