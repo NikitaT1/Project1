@@ -2,14 +2,14 @@ import {createStore} from "redux";
 
 const initialState = {
     todoLists: [
-        {id: 0, title: "React", tasks: [
+        /*{id: 0, title: "React", tasks: [
             ]},
         {id: 1, title: "Redux", tasks: [
                 {id: 1, title: "newOne", isDone: false, priority: "low"}
             ]},
         {id: 2, title: "JS", tasks: [
                 {id: 1, title: "newOne", isDone: false, priority: "low"}
-            ]}
+            ]}*/
     ]
 }
 
