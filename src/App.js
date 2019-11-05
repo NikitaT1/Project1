@@ -3,10 +3,15 @@ import './App.css';
 import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import connect from "react-redux/lib/connect/connect";
+import {addTodoAC} from "./reducer";
 
 class App extends React.Component {
 
-    nextTaskId = 0;
+    nextTaskId = 5;
+
+    state = {
+        todolists: []
+    }
 
 
     onTitleAdded = (newText) => {
@@ -19,10 +24,30 @@ class App extends React.Component {
         this.nextTaskId++
     }
 
+    componentDidMount() {
+        this.restoreState();
+    }
+
+
+    restoreState = () => {
+        let state = this.state;
+        let stateAsString = localStorage.getItem("todolists-state");
+        if (stateAsString != null) {
+            state = JSON.parse(stateAsString);
+        }
+        this.setState(state, () => {
+            this.state.todolists.forEach(t => {
+                if (t.id >= this.nextTodoListId) {
+                    this.nextTodoListId = t.id + 1;
+                }
+            })
+        });
+    }
+
 
     render = () => {
 
-        const todoLists = this.props.todoLists.map (t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
+        const todoLists = this.props.todoLists.map(t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
 
         return (
             <>
@@ -46,11 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addTodo: (newTodolist) => {
-            const action = {
-                type: "ADD-TODOLIST",
-                newTodolist: newTodolist
-            };
-
+            const action = addTodoAC(newTodolist);
             dispatch(action)
         }
     }
