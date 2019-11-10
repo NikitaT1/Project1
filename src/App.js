@@ -3,7 +3,8 @@ import './App.css';
 import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import connect from "react-redux/lib/connect/connect";
-import {addTodoAC} from "./reducer";
+import {addTodoAC, setTodoListsAC} from "./reducer";
+import axios from "axios";
 
 class App extends React.Component {
 
@@ -14,35 +15,26 @@ class App extends React.Component {
     }
 
 
-    onTitleAdded = (newText) => {
-        let newTodolist = {
-            id: this.nextTaskId,
-            title: newText,
-            tasks: []
-        };
-        this.props.addTodo(newTodolist)
-        this.nextTaskId++
+    addTodoList = (title) => {
+        axios.post("https://social-network.samuraijs.com/api/1.0/todo-lists",
+            {title: title}, {withCredentials: true,
+                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+            .then(res => {
+                let newTodoList = res.data.data.item;
+                this.props.addTodoList(newTodoList)});
     }
 
     componentDidMount() {
         this.restoreState();
     }
 
-
     restoreState = () => {
-        let state = this.state;
-        let stateAsString = localStorage.getItem("todolists-state");
-        if (stateAsString != null) {
-            state = JSON.parse(stateAsString);
-        }
-        this.setState(state, () => {
-            this.state.todolists.forEach(t => {
-                if (t.id >= this.nextTodoListId) {
-                    this.nextTodoListId = t.id + 1;
-                }
-            })
-        });
+        axios.get("https://social-network.samuraijs.com/api/1.0/todo-lists", {withCredentials: true})
+            .then(res => {
+                this.props.setTodoLists(res.data);
+            });
     }
+
 
 
     render = () => {
@@ -52,7 +44,7 @@ class App extends React.Component {
         return (
             <>
                 <div>
-                    <AddNewItemForm addItem={this.onTitleAdded}/>
+                    <AddNewItemForm addItem={this.addTodoList}/>
                 </div>
                 <div className="App">
                     {todoLists}
@@ -70,8 +62,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTodo: (newTodolist) => {
+        addTodoList: (newTodolist) => {
             const action = addTodoAC(newTodolist);
+            dispatch(action)
+        },
+        setTodoLists: (todolists) => {
+            const action = setTodoListsAC(todolists);
             dispatch(action)
         }
     }
