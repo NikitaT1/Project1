@@ -9,14 +9,14 @@ export const SET_TODOLIST = "Todolist/Reducer/SET_TODOLIST";
 
 const initialState = {
     todoLists: [],
+    tasks: []
 }
 
 const reducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case SET_TODOLIST:
             return {
-                ...state, todoLists: action.todolists
+                ...state, todoLists: action.todolists.map(tl => ({...tl, tasks: []}))
 
             }
         case ADD_TODOLIST:
@@ -56,7 +56,6 @@ const reducer = (state = initialState, action) => {
             }
         }
         case DEL_TODOLIST: {
-            debugger
             return {
                 ...state,
                 todoLists: state.todoLists.filter(t => {

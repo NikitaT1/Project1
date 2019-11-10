@@ -5,6 +5,7 @@ import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 import connect from "react-redux/lib/connect/connect";
 import {addTaskAC, changeTaskAC, delTaskCallAC} from "./reducer";
+import axios from "axios"
 
 class TodoList extends React.Component {
 
@@ -19,7 +20,7 @@ class TodoList extends React.Component {
         filterValue: "All"
     };
 
-    onTaskAdded = (newText) => {
+    /*onTaskAdded = (newText) => {
         let newTask = {
             id: this.nextTaskId,
             title: newText,
@@ -28,7 +29,22 @@ class TodoList extends React.Component {
         };
         this.nextTaskId++;
         this.props.addTask(newTask, this.props.id)
+    }*/
+
+    onTaskAdded = (newText) => {
+        axios.post(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}/tasks`,
+            {title: newText}, {withCredentials: true,
+                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+            .then(res => {
+                let newTask = res.data.data.item;
+                this.props.addTask(newTask, this.props.id)
+            });
+
     }
+
+
+
+
 
     onFilterChanged = (newFilterValue) => {
         this.setState( {
