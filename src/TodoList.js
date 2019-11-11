@@ -4,7 +4,7 @@ import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 import connect from "react-redux/lib/connect/connect";
-import {addTaskAC, changeTaskAC, delTaskCallAC} from "./reducer";
+import {addTaskAC, changeTaskAC, delTaskCallAC, setTasksAC} from "./reducer";
 import axios from "axios"
 
 class TodoList extends React.Component {
@@ -14,22 +14,25 @@ class TodoList extends React.Component {
         this.newTasksTitileRef = React.createRef();
     };
 
+    componentDidMount() {
+        this.restoreState();
+    };
+
+    restoreState = () => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}/tasks`,
+            {withCredentials: true,
+                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+            .then(res => {
+                let allTasks = res.data.items;
+                this.props.setTasks(allTasks, this.props.id)});
+    };
+
     nextTaskId = 0;
 
     state = {
         filterValue: "All"
     };
 
-    /*onTaskAdded = (newText) => {
-        let newTask = {
-            id: this.nextTaskId,
-            title: newText,
-            isDone: false,
-            priority: "low"
-        };
-        this.nextTaskId++;
-        this.props.addTask(newTask, this.props.id)
-    }*/
 
     onTaskAdded = (newText) => {
         axios.post(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}/tasks`,
@@ -41,7 +44,6 @@ class TodoList extends React.Component {
             });
 
     }
-
 
 
 
@@ -65,10 +67,13 @@ class TodoList extends React.Component {
     };
 
     delTaskCall = (todolistId, taskId) => {
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/${taskId}`,
+             {withCredentials: true,
+                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+            .then(res => {
         this.props.delTaskCall (todolistId, taskId)
+            });
     }
-
-
 
 
     render = () => {
@@ -107,6 +112,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         delTaskCall (todolistId, taskId) {
             const action = delTaskCallAC (todolistId, taskId)
+            dispatch(action);
+        },
+        setTasks (allTasks, tasksId) {
+            const action = setTasksAC (allTasks, tasksId);
             dispatch(action);
         }
 
