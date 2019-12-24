@@ -56,7 +56,7 @@ class TodoList extends React.Component {
         this.changeTask({title:title}, taskId)
     };
 
-/*    changeTask = (obj, taskId) => {
+        changeTask = (taskId, obj) => {
         let task = this.props.tasks.find((task) => {
             return task.id === taskId
         })
@@ -67,15 +67,21 @@ class TodoList extends React.Component {
             .then( (res) => {
         this.props.updateTask (obj, taskId, this.props.id)
             })
-    };*/
+    };
 
-    changeTask = (taskId, obj) => {
+  /*  changeTask = (taskId, obj) => {
         this.props.tasks.forEach(task => {
             if (task.id === taskId) {
+                let newTask = {...task, ...obj}
+                axios.put(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/`, newTask,
+                    {withCredentials: true,
+                        headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+                    .then( (res) => {
                 this.props.updateTask(taskId, obj, this.props.id)
-            }
+            })
         })
-    }
+    }*/
+
 
 
     delTaskCall = (todolistId, taskId) => {

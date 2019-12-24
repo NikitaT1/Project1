@@ -29,6 +29,10 @@ export const api = {
 
     getTasks(id) {
         return instance.get(`/${id}/tasks`)
+    },
+
+    updateTasks() {
+
     }
 
 }

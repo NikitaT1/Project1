@@ -103,7 +103,6 @@ export const addTaskAC = (newTask, todolistId) => {
 };
 
 export const changeTaskAC = (taskId, obj, todolistId) => {
-    debugger
     return {type: CHANGE_TASK, taskId, obj, todolistId}
 };
 
