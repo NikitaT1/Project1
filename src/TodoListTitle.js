@@ -2,17 +2,15 @@ import React from 'react';
 import './App.css';
 import connect from "react-redux/lib/connect/connect";
 import {delTodoListAC} from "./reducer";
-import axios from "axios"
+import axios from "axios";
+import {api} from "./api";
 
 
 class TodoListTitle extends React.Component {
 
 
     deleteTodolist = () => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}`,
-            {
-                withCredentials: true,
-                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+        api.deleteTodoList(this.props.id)
             .then((res) => {
                 this.props.deleteTodolist(this.props.id)
             })

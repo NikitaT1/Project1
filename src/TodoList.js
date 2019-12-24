@@ -6,6 +6,7 @@ import TodoListFooter from "./TodoListFooter";
 import connect from "react-redux/lib/connect/connect";
 import {addTaskAC, changeTaskAC, delTaskCallAC, setTasksAC} from "./reducer";
 import axios from "axios"
+import {api} from "./api";
 
 class TodoList extends React.Component {
 
@@ -19,9 +20,7 @@ class TodoList extends React.Component {
     };
 
     restoreState = () => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}/tasks`,
-            {withCredentials: true,
-                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+        api.getTasks(this.props.id)
             .then(res => {
                 let allTasks = res.data.items;
                 this.props.setTasks(allTasks, this.props.id)});
@@ -35,9 +34,7 @@ class TodoList extends React.Component {
 
 
     onTaskAdded = (newText) => {
-        axios.post(`https://social-network.samuraijs.com/api/1.0/todo-lists/${this.props.id}/tasks`,
-            {title: newText}, {withCredentials: true,
-                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+       api.createTask(this.props.id, newText)
             .then(res => {
                 let newTask = res.data.data.item;
                 this.props.addTask(newTask, this.props.id)
@@ -52,7 +49,6 @@ class TodoList extends React.Component {
     }
 
     onTaskStatusChanged = (taskId, status) => {
-        debugger
         this.changeTask(taskId, {status:status})
     };
 
@@ -74,10 +70,8 @@ class TodoList extends React.Component {
     };*/
 
     changeTask = (taskId, obj) => {
-        debugger
         this.props.tasks.forEach(task => {
             if (task.id === taskId) {
-                debugger
                 this.props.updateTask(taskId, obj, this.props.id)
             }
         })
@@ -85,9 +79,7 @@ class TodoList extends React.Component {
 
 
     delTaskCall = (todolistId, taskId) => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/${taskId}`,
-             {withCredentials: true,
-                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+        api.deleteTask(taskId)
             .then(res => {
         this.props.delTaskCall (todolistId, taskId)
             });
@@ -125,7 +117,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         updateTask (taskId, obj, todolistId) {
-            debugger
             const action = changeTaskAC (taskId, obj, todolistId);
             dispatch(action);
         },
