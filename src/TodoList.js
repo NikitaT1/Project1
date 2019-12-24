@@ -45,26 +45,44 @@ class TodoList extends React.Component {
 
     }
 
-
-
-
     onFilterChanged = (newFilterValue) => {
         this.setState( {
             filterValue: newFilterValue
         } );
     }
 
-    onTaskStatusChanged = (isDone, taskId) => {
-        this.changeTask({isDone:isDone}, taskId)
+    onTaskStatusChanged = (taskId, status) => {
+        debugger
+        this.changeTask(taskId, {status:status})
     };
 
     onTaskTitleChanged = (title, taskId) => {
         this.changeTask({title:title}, taskId)
     };
 
-    changeTask = (obj, taskId) => {
-        this.props.changeTask (obj, taskId, this.props.id)
-    };
+/*    changeTask = (obj, taskId) => {
+        let task = this.props.tasks.find((task) => {
+            return task.id === taskId
+        })
+        let newTask = {...task, ...obj}
+        axios.put(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/`, newTask,
+            {withCredentials: true,
+            headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+            .then( (res) => {
+        this.props.updateTask (obj, taskId, this.props.id)
+            })
+    };*/
+
+    changeTask = (taskId, obj) => {
+        debugger
+        this.props.tasks.forEach(task => {
+            if (task.id === taskId) {
+                debugger
+                this.props.updateTask(taskId, obj, this.props.id)
+            }
+        })
+    }
+
 
     delTaskCall = (todolistId, taskId) => {
         axios.delete(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/${taskId}`,
@@ -106,8 +124,9 @@ const mapDispatchToProps = (dispatch) => {
             const action = addTaskAC (newTask, todolistId);
             dispatch(action);
         },
-        changeTask (obj, taskId, todolistId) {
-            const action = changeTaskAC (obj, taskId, todolistId);
+        updateTask (taskId, obj, todolistId) {
+            debugger
+            const action = changeTaskAC (taskId, obj, todolistId);
             dispatch(action);
         },
         delTaskCall (todolistId, taskId) {

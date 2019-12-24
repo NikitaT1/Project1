@@ -102,8 +102,9 @@ export const addTaskAC = (newTask, todolistId) => {
     return {type: ADD_TASK, newTask, todolistId}
 };
 
-export const changeTaskAC = (obj, taskId, todolistId) => {
-    return {type: CHANGE_TASK, obj, taskId, todolistId}
+export const changeTaskAC = (taskId, obj, todolistId) => {
+    debugger
+    return {type: CHANGE_TASK, taskId, obj, todolistId}
 };
 
 export const delTaskCallAC = (todolistId, taskId) => {
