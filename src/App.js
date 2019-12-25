@@ -4,7 +4,6 @@ import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import connect from "react-redux/lib/connect/connect";
 import {addTodoAC, setTodoListsAC} from "./reducer";
-import axios from "axios";
 import {api} from "./api";
 
 class App extends React.Component {

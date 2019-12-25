@@ -52,8 +52,8 @@ class TodoList extends React.Component {
         this.changeTask(taskId, {status:status})
     };
 
-    onTaskTitleChanged = (title, taskId) => {
-        this.changeTask({title:title}, taskId)
+    onTaskTitleChanged = (taskId, title ) => {
+        this.changeTask(taskId, {title:title})
     };
 
         changeTask = (taskId, obj) => {
@@ -65,7 +65,7 @@ class TodoList extends React.Component {
             {withCredentials: true,
             headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
             .then( (res) => {
-        this.props.updateTask (obj, taskId, this.props.id)
+        this.props.updateTask (taskId, obj, this.props.id)
             })
     };
 
@@ -81,7 +81,6 @@ class TodoList extends React.Component {
             })
         })
     }*/
-
 
 
     delTaskCall = (todolistId, taskId) => {

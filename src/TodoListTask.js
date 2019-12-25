@@ -4,7 +4,8 @@ import './App.css';
 class TodoListTask extends React.Component {
 
     state = {
-        editMode: false
+        editMode: false,
+        taskTitle: this.props.task.title
     };
 
     onIsDoneChanged = (e) => {
@@ -18,10 +19,12 @@ class TodoListTask extends React.Component {
 
     deactivateEditMode = () => {
         this.setState({editMode: false})
+        this.props.onTaskTitleChanged(this.props.task.id, this.state.taskTitle)
     };
 
     onTitleChanged = (e) => {
-        this.props.onTaskTitleChanged(e.currentTarget.value, this.props.task.id)
+        this.setState({taskTitle: e.currentTarget.value})
+        //this.props.onTaskTitleChanged(e.currentTarget.value, this.props.task.id)
     };
 
     delTask = () => {
@@ -40,10 +43,10 @@ class TodoListTask extends React.Component {
                 <input type="checkbox" checked={this.props.task.status === 2}
                        onChange={this.onIsDoneChanged}/>
                 {this.state.editMode ? <input onBlur={this.deactivateEditMode}
-                                              autoFocus={true} value={this.props.task.title}
+                                              autoFocus={true} value={this.state.taskTitle}
                                               onChange={this.onTitleChanged}/> :
                     <span onClick={this.activateEditMode}>
-                    {this.props.task.id} - {this.props.task.title}</span>},
+                   {/* {this.props.task.id} -*/} {this.props.task.title}</span>},
                 priority: {this.props.task.priority} <button onClick={this.delTask}>X</button>
             </div>
         );
