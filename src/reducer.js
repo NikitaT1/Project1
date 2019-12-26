@@ -1,3 +1,5 @@
+import {api} from "./api";
+
 export const ADD_TODOLIST = "Todolist/Reducer/ADD-TODOLIST";
 export const ADD_TASK = "Todolist/Reducer/ADD-TASK";
 export const CHANGE_TASK = "Todolist/Reducer/CHANGE-TASK";
@@ -125,6 +127,15 @@ export const setTodoListsAC = (todolists) => {
 
 export const setTasksAC = (allTasks, todoListId) => {
     return {type: SET_TASKS, allTasks, todoListId}
+}
+
+
+export const setTodoListsTC = () => (dispatch) => {
+    api.uploadTodolists()
+        .then(res => {
+            const action = setTodoListsAC(res.data);
+            dispatch(action)
+        });
 }
 
 
