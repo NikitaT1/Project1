@@ -61,9 +61,7 @@ class TodoList extends React.Component {
             return task.id === taskId
         })
         let newTask = {...task, ...obj}
-        axios.put(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/`, newTask,
-            {withCredentials: true,
-            headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+        api.updateTasks(newTask)
             .then( (res) => {
         this.props.updateTask (taskId, obj, this.props.id)
             })

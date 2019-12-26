@@ -31,8 +31,10 @@ export const api = {
         return instance.get(`/${id}/tasks`)
     },
 
-    updateTasks() {
-
+    updateTasks(newTask) {
+        return instance.put(`/tasks/`, newTask,
+            {withCredentials: true,
+                headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
     }
 
 }
