@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import connect from "react-redux/lib/connect/connect";
-import {delTodoListAC} from "./reducer";
+import {delTodoListAC, delTodoListTC} from "./reducer";
 import axios from "axios";
 import {api} from "./api";
 
@@ -10,10 +10,7 @@ class TodoListTitle extends React.Component {
 
 
     deleteTodolist = () => {
-        api.deleteTodoList(this.props.id)
-            .then((res) => {
-                this.props.deleteTodolist(this.props.id)
-            })
+          this.props.deleteTodolist(this.props.id)
     }
 
 
@@ -33,11 +30,10 @@ class TodoListTitle extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteTodolist: (todolistId) => {
-            const action = delTodoListAC (todolistId)
+            const action = delTodoListTC (todolistId)
             dispatch(action)
             }
         }
-
 }
 
 

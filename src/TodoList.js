@@ -4,7 +4,7 @@ import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 import connect from "react-redux/lib/connect/connect";
-import {addTaskAC, changeTaskAC, delTaskCallAC, setTasksAC} from "./reducer";
+import {addTaskAC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC} from "./reducer";
 import axios from "axios"
 import {api} from "./api";
 
@@ -82,10 +82,7 @@ class TodoList extends React.Component {
 
 
     delTaskCall = (todolistId, taskId) => {
-        api.deleteTask(taskId)
-            .then(res => {
         this.props.delTaskCall (todolistId, taskId)
-            });
     }
 
 
@@ -124,7 +121,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         delTaskCall (todolistId, taskId) {
-            const action = delTaskCallAC (todolistId, taskId)
+            const action = delTaskCallTC (todolistId, taskId)
             dispatch(action);
         },
         setTasks (allTasks, tasksId) {
