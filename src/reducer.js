@@ -127,11 +127,6 @@ export const setTasksAC = (allTasks, todoListId) => {
     return {type: SET_TASKS, allTasks, todoListId}
 };
 
-
-
-
-
-
 export const setTodoListsTC = () => (dispatch) => {
     api.uploadTodolists()
         .then(res => {
@@ -162,21 +157,28 @@ export const delTaskCallTC = (todolistId, taskId) => (dispatch) => {
         });
 }
 
-/*export const changeTaskTC = (taskId, obj, todolistId) => (dispatch) => {
+/*export const changeTaskTC = (taskId, obj, todolistId, newTask) => (dispatch) => {
     api.updateTasks(newTask)
         .then( (res) => {
-            dispatch(changeTaskAC(taskId, obj, todolistId))
+            dispatch(changeTaskAC(taskId, obj, todolistId, newTask))
         })
 }*/
 
-/*export const addTaskTC = (newText, todolistId) => (dispatch) => {
-    api.createTask(newText, todolistId)
+export const addTaskTC = (todoListId, newText) => (dispatch) => {
+    api.createTask(todoListId, newText)
         .then(res => {
             let newTask = res.data.data.item;
-            dispatch(addTaskAC(newTask, todolistId))
+            dispatch(addTaskAC(newTask, todoListId))
         });
 
-}*/
+}
 
+export const setTasksTC = (tasksId) => (dispatch) => {
+    api.getTasks(tasksId)
+        .then(res => {
+            let allTasks = res.data.items;
+            dispatch(setTasksAC(allTasks, tasksId))
+        });
+}
 
 export default reducer;

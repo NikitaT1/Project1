@@ -4,7 +4,7 @@ import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 import connect from "react-redux/lib/connect/connect";
-import {addTaskAC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC} from "./reducer";
+import {addTaskAC, addTaskTC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC, setTasksTC} from "./reducer";
 import axios from "axios"
 import {api} from "./api";
 
@@ -20,10 +20,7 @@ class TodoList extends React.Component {
     };
 
     restoreState = () => {
-        api.getTasks(this.props.id)
-            .then(res => {
-                let allTasks = res.data.items;
-                this.props.setTasks(allTasks, this.props.id)});
+                this.props.setTasks(this.props.id)
     };
 
     nextTaskId = 0;
@@ -32,15 +29,9 @@ class TodoList extends React.Component {
         filterValue: "All"
     };
 
-
     onTaskAdded = (newText) => {
-       api.createTask(this.props.id, newText)
-            .then(res => {
-                let newTask = res.data.data.item;
-                this.props.addTask(newTask, this.props.id)
-            });
+                this.props.addTask(this.props.id, newText)};
 
-    }
 
     onFilterChanged = (newFilterValue) => {
         this.setState( {
@@ -66,6 +57,7 @@ class TodoList extends React.Component {
         this.props.updateTask (taskId, obj, this.props.id)
             })
     };
+
 
   /*  changeTask = (taskId, obj) => {
         this.props.tasks.forEach(task => {
@@ -112,8 +104,8 @@ class TodoList extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTask (newTask, todolistId) {
-            const action = addTaskAC (newTask, todolistId);
+        addTask (todoListId, newText) {
+            const action = addTaskTC (todoListId, newText);
             dispatch(action);
         },
         updateTask (taskId, obj, todolistId) {
@@ -124,9 +116,9 @@ const mapDispatchToProps = (dispatch) => {
             const action = delTaskCallTC (todolistId, taskId)
             dispatch(action);
         },
-        setTasks (allTasks, tasksId) {
-            const action = setTasksAC (allTasks, tasksId);
-            dispatch(action);
+        setTasks (tasksId) {
+            const action = setTasksTC (tasksId);
+            dispatch(action)
         }
 
     }
