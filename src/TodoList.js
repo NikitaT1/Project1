@@ -3,9 +3,8 @@ import './App.css';
 import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
-import connect from "react-redux/lib/connect/connect";
+import {connect} from "react-redux"
 import {addTaskAC, addTaskTC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC, setTasksTC} from "./reducer";
-import axios from "axios"
 import {api} from "./api";
 
 class TodoList extends React.Component {
@@ -20,7 +19,7 @@ class TodoList extends React.Component {
     };
 
     restoreState = () => {
-                this.props.setTasks(this.props.id)
+        this.props.setTasks(this.props.id)
     };
 
     nextTaskId = 0;
@@ -30,10 +29,11 @@ class TodoList extends React.Component {
     };
 
     onTaskAdded = (newText) => {
-                this.props.addTask(this.props.id, newText)};
+        this.props.addTask(this.props.id, newText)};
 
 
     onFilterChanged = (newFilterValue) => {
+        debugger
         this.setState( {
             filterValue: newFilterValue
         } );
@@ -58,21 +58,6 @@ class TodoList extends React.Component {
             })
     };
 
-
-  /*  changeTask = (taskId, obj) => {
-        this.props.tasks.forEach(task => {
-            if (task.id === taskId) {
-                let newTask = {...task, ...obj}
-                axios.put(`https://social-network.samuraijs.com/api/1.0/todo-lists/tasks/`, newTask,
-                    {withCredentials: true,
-                        headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
-                    .then( (res) => {
-                this.props.updateTask(taskId, obj, this.props.id)
-            })
-        })
-    }*/
-
-
     delTaskCall = (todolistId, taskId) => {
         this.props.delTaskCall (todolistId, taskId)
     }
@@ -90,10 +75,10 @@ class TodoList extends React.Component {
                                        return true;
                                    }
                                    if (this.state.filterValue === "Active") {
-                                       return t.isDone === false;
+                                       return t.status === 0;
                                    }
                                    if (this.state.filterValue === "Completed") {
-                                       return t.isDone === true;
+                                       return t.status === 2;
                                    }
                                })}/>
                 <TodoListFooter onFilterChanged={this.onFilterChanged} filterValue={this.state.filterValue} />
@@ -120,7 +105,6 @@ const mapDispatchToProps = (dispatch) => {
             const action = setTasksTC (tasksId);
             dispatch(action)
         }
-
     }
 }
 

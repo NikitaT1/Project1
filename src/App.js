@@ -2,9 +2,10 @@ import React from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
-import connect from "react-redux/lib/connect/connect";
+import {connect} from "react-redux"
 import {addTodoAC, addTodoTC, setTodoListsAC, setTodoListsTC} from "./reducer";
-import {api} from "./api";
+// import Login from "./Login";
+import LoginApp from "./LoginApp";
 
 class App extends React.Component {
 
@@ -35,11 +36,15 @@ class App extends React.Component {
 
         return (
             <>
+
                 <div>
                     <AddNewItemForm addItem={this.addTodoList}/>
                 </div>
                 <div className="App">
                     {todoLists}
+                </div>
+                <div>
+                    <LoginApp />
                 </div>
             </>
         );
@@ -48,7 +53,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        todoLists: state.todoLists
+        todoLists: state.todoReducer.todoLists,
     }
 };
 

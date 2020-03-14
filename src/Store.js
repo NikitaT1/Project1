@@ -1,12 +1,15 @@
-import {applyMiddleware, createStore} from "redux";
-import rootReducer from "./reducer";
+import {applyMiddleware, combineReducers, createStore} from "redux";
+import mainReducer from "./reducer";
 import thunkMiddleware from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form';
 
 
-const store = createStore(
-    rootReducer,
-    applyMiddleware(thunkMiddleware)
-);
+let Reducer = combineReducers({
+    form: formReducer,
+    todoReducer: mainReducer
+})
+
+let store = createStore(Reducer, applyMiddleware(thunkMiddleware));
 
 window.store = store;
 export default store;
