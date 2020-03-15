@@ -1,4 +1,4 @@
-import {api} from "./api";
+import {api, authAPI} from "./api";
 
 export const ADD_TODOLIST = "Todolist/Reducer/ADD-TODOLIST";
 export const ADD_TASK = "Todolist/Reducer/ADD-TASK";
@@ -6,12 +6,14 @@ export const CHANGE_TASK = "Todolist/Reducer/CHANGE-TASK";
 export const DEL_TODOLIST = "Todolist/Reducer/DEL-TODOLIST";
 export const DEL_TASK = "Todolist/Reducer/DEL_TASK";
 export const SET_TODOLIST = "Todolist/Reducer/SET_TODOLIST";
-export const SET_TASKS = "TodoList/Reducer/SET_TASKS"
+export const SET_TASKS = "TodoList/Reducer/SET_TASKS";
+export const LOGIN_FREE = "LOGIN_FREE"
 
 
 const initialState = {
     todoLists: [],
-    tasks: []
+    tasks: [],
+    isAuth: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -93,6 +95,11 @@ const reducer = (state = initialState, action) => {
 
             }
         }
+        case LOGIN_FREE: {
+            return {
+                ... state, isAuth: true
+            }
+        }
 
         default: return state
     }
@@ -126,6 +133,10 @@ export const setTodoListsAC = (todolists) => {
 export const setTasksAC = (allTasks, todoListId) => {
     return {type: SET_TASKS, allTasks, todoListId}
 };
+
+export const loginFreeAC = () => {
+    return {type: LOGIN_FREE}
+}
 
 export const setTodoListsTC = () => (dispatch) => {
     api.uploadTodolists()
@@ -180,5 +191,22 @@ export const setTasksTC = (tasksId) => (dispatch) => {
             dispatch(setTasksAC(allTasks, tasksId))
         });
 }
+
+export const LoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
+    authAPI.login(email, password, rememberMe, captcha)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(loginFreeAC())
+            }
+            else {
+                if (response.data.resultCode === 10){
+                    return(alert("error"))
+                }
+
+            }
+        });
+};
+
+
 
 export default reducer;

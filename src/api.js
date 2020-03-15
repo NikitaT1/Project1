@@ -36,5 +36,12 @@ export const api = {
             {withCredentials: true,
                 headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
     }
-
 }
+
+export const authAPI = {
+    login (email, password, rememberMe, captcha = null) {
+        return axios.post(`https://social-network.samuraijs.com/api/1.0/auth/login`,
+            {email, password, rememberMe, captcha},
+            {withCredentials: true, headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+    }
+};

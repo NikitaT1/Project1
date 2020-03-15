@@ -26,8 +26,8 @@ class App extends React.Component {
 
 
     restoreState = () => {
-                this.props.setTodoLists();
-            }
+        this.props.setTodoLists();
+    }
 
 
     render = () => {
@@ -68,6 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
+
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 export default ConnectedApp;
 

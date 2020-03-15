@@ -1,27 +1,29 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
+import {connect} from "react-redux";
+import {LoginThunk} from "./reducer";
 
 
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field placeholder="Имя" component={"input"} name={"user_name"}/>
-            <Field placeholder="e-mail"  component={"input"} name={"user_email"}/>
-            <Field  placeholder="message" component={"textarea"} name={"message"}/>
+            <Field placeholder="free@samuraijs.com" component={"input"} name={"login"} value={"free@samuraijs.com"}/>
+            <Field placeholder="free"  component={"input"} name={"password"}/>
+            <Field  type={"checkbox"} component={"input"} name={"rememberMe"}/>
             <button>LOGIN</button>
         </form>
     )
 }
 
-const LoginReduxForm = reduxForm({form:'form'})(LoginForm)
+const LoginReduxForm = reduxForm({form:'loginFree'})(LoginForm)
 
 const LoginApp = (props) => {
     const onSubmit = (formData) => {
-        console.log(formData)
+        props.LoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     return (
-        <div id={"login"}>
+        <div>
             {/*<Fade clear>*/}
                 <div>
                     <LoginReduxForm onSubmit={onSubmit}/>
@@ -31,4 +33,4 @@ const LoginApp = (props) => {
     );
 }
 
-export default LoginApp;
+export default connect(null, {LoginThunk})(LoginApp);
