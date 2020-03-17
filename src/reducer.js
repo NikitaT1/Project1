@@ -1,4 +1,4 @@
-import {api, authAPI} from "./api";
+import {api, loginAPI, authAPI, SecurityAPI} from "./api";
 
 export const ADD_TODOLIST = "Todolist/Reducer/ADD-TODOLIST";
 export const ADD_TASK = "Todolist/Reducer/ADD-TASK";
@@ -7,13 +7,15 @@ export const DEL_TODOLIST = "Todolist/Reducer/DEL-TODOLIST";
 export const DEL_TASK = "Todolist/Reducer/DEL_TASK";
 export const SET_TODOLIST = "Todolist/Reducer/SET_TODOLIST";
 export const SET_TASKS = "TodoList/Reducer/SET_TASKS";
-export const LOGIN_FREE = "LOGIN_FREE"
+export const LOGIN_FREE = "LOGIN_FREE";
+export const GET_CAPTCHA_URL_SUCCESS = "GET_CAPTCHA_URL_SUCCESS"
 
 
 const initialState = {
     todoLists: [],
     tasks: [],
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -100,13 +102,14 @@ const reducer = (state = initialState, action) => {
                 ... state, isAuth: true
             }
         }
-
+        case GET_CAPTCHA_URL_SUCCESS: {
+            return{...state, ...action.data}
+        }
         default: return state
     }
 }
 
 export const addTaskAC = (newTask, todolistId) => {
-    debugger
     return {type: ADD_TASK, newTask, todolistId}
 };
 
@@ -137,6 +140,12 @@ export const setTasksAC = (allTasks, todoListId) => {
 export const loginFreeAC = () => {
     return {type: LOGIN_FREE}
 }
+
+export const getCaptchaUrlSuccess = (captchaUrl) =>
+    ({type: GET_CAPTCHA_URL_SUCCESS, data: {captchaUrl}})
+
+
+
 
 export const setTodoListsTC = () => (dispatch) => {
     api.uploadTodolists()
@@ -185,6 +194,7 @@ export const addTaskTC = (todoListId, newText) => (dispatch) => {
 }
 
 export const setTasksTC = (tasksId) => (dispatch) => {
+    debugger
     api.getTasks(tasksId)
         .then(res => {
             let allTasks = res.data.items;
@@ -193,18 +203,33 @@ export const setTasksTC = (tasksId) => (dispatch) => {
 }
 
 export const LoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
-    authAPI.login(email, password, rememberMe, captcha)
+    loginAPI.login(email, password, rememberMe, captcha)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(loginFreeAC())
+                dispatch(getAuthThunk())
             }
             else {
                 if (response.data.resultCode === 10){
-                    return(alert("error"))
+                    dispatch(getCaptchaUrlThunk())
                 }
-
             }
         });
+};
+
+export const getAuthThunk = () => async (dispatch) => {
+    let response = await authAPI.me()
+    if (response.data.resultCode === 0) {
+       /* let {id, email, login} = response.data.data;*/
+        dispatch(loginFreeAC())
+    }
+};
+
+export const getCaptchaUrlThunk = () => async (dispatch) => {
+    const response = await SecurityAPI.getCaptchaUrl()
+    const captchaUrl = response.data.url;
+    debugger
+    dispatch(getCaptchaUrlSuccess(captchaUrl))
+
 };
 
 

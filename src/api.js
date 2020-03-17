@@ -38,10 +38,26 @@ export const api = {
     }
 }
 
-export const authAPI = {
+export const loginAPI = {
     login (email, password, rememberMe, captcha = null) {
         return axios.post(`https://social-network.samuraijs.com/api/1.0/auth/login`,
             {email, password, rememberMe, captcha},
             {withCredentials: true, headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
     }
 };
+
+export const authAPI = {
+    me() {
+        return axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
+            {withCredentials: true, headers: {"API-KEY": "1f7d7956-460f-4c20-a95b-d50d82e17d88"}})
+    }
+};
+
+export const SecurityAPI = {
+    getCaptchaUrl () {
+        return axios.get(`https://social-network.samuraijs.com/api/1.0/auth/security/get-captcha-url`,
+            {withCredentials: true})
+    },
+};
+
+

@@ -14,14 +14,22 @@ class App extends React.Component {
     state = {
         todolists: []
     }
-
-
+    
     addTodoList = (title) => {
         this.props.addTodoList(title);
     }
 
     componentDidMount() {
         this.restoreState();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        let prevIsAuth = prevProps.isAuth
+        let isAuth = this.props.isAuth
+        debugger
+        if (this.props.isAuth !== prevIsAuth) {
+            this.props.setTodoLists();
+        }
     }
 
 
@@ -31,20 +39,19 @@ class App extends React.Component {
 
 
     render = () => {
-
+        if (!this.props.isAuth) {
+            return <div>
+            <LoginApp />
+            </div>
+        }
         const todoLists = this.props.todoLists.map(t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
-
         return (
             <>
-
                 <div>
                     <AddNewItemForm addItem={this.addTodoList}/>
                 </div>
                 <div className="App">
                     {todoLists}
-                </div>
-                <div>
-                    <LoginApp />
                 </div>
             </>
         );
@@ -54,6 +61,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
     return {
         todoLists: state.todoReducer.todoLists,
+        isAuth: state.todoReducer.isAuth
     }
 };
 

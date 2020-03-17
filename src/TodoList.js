@@ -33,7 +33,6 @@ class TodoList extends React.Component {
 
 
     onFilterChanged = (newFilterValue) => {
-        debugger
         this.setState( {
             filterValue: newFilterValue
         } );
