@@ -8,7 +8,7 @@ import {Redirect} from "react-router-dom";
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field placeholder="free@samuraijs.com" component={"input"} name={"email"} value={"free@samuraijs.com"}/>
+            <Field placeholder="free@samuraijs.com" component={"input"} name={"email"}/>
             <Field placeholder="free"  component={"input"} name={"password"}/>
             <Field  type={"checkbox"} component={"input"} name={"rememberMe"}/>
             <button>LOGIN</button>
