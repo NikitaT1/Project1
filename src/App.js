@@ -6,6 +6,7 @@ import {connect} from "react-redux"
 import {addTodoAC, addTodoTC, setTodoListsAC, setTodoListsTC} from "./reducer";
 // import Login from "./Login";
 import LoginApp from "./LoginApp";
+import TodoListFunctional from "./TodoListFunctional";
 
 class App extends React.Component {
 
@@ -26,12 +27,10 @@ class App extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         let prevIsAuth = prevProps.isAuth
         let isAuth = this.props.isAuth
-        debugger
         if (this.props.isAuth !== prevIsAuth) {
             this.props.setTodoLists();
         }
     }
-
 
     restoreState = () => {
         this.props.setTodoLists();
@@ -44,7 +43,7 @@ class App extends React.Component {
             <LoginApp />
             </div>
         }
-        const todoLists = this.props.todoLists.map(t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
+        const todoLists = this.props.todoLists.map(t => <TodoListFunctional id={t.id} title={t.title} tasks={t.tasks}/>)
         return (
             <>
                 <div>
