@@ -6,6 +6,7 @@ import TodoListFooter from "./TodoListFooter";
 import {connect} from "react-redux"
 import {addTaskAC, addTaskTC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC, setTasksTC} from "./reducer";
 import {api} from "./api";
+import TodoListFooterFunctional from "./TodoListFooterFunctional";
 
 
 const TodoListFunctional = (props) => {
@@ -29,18 +30,18 @@ const TodoListFunctional = (props) => {
 
     const nextTaskId = 0;
 
-    const state = {
+    /*const state = {
         filterValue: "All"
-    };
+    };*/
+
+    const [filterValue, setFilter] = useState("All")
 
     const onTaskAdded = (newText) => {
         props.addTask(props.id, newText)};
 
 
     const onFilterChanged = (newFilterValue) => {
-        this.setState( {
-            filterValue: newFilterValue
-        } );
+        setFilter(newFilterValue)
     }
 
     const onTaskStatusChanged = (taskId, status) => {
@@ -75,17 +76,17 @@ const TodoListFunctional = (props) => {
                 <TodoListTasks id={props.id} onTaskStatusChanged={onTaskStatusChanged}
                                onTaskTitleChanged={onTaskTitleChanged} delTaskCall={delTaskCall}
                                tasks={tasks.filter(t => {
-                                   if (state.filterValue === "All") {
+                                   if (filterValue === "All") {
                                        return true;
                                    }
-                                   if (state.filterValue === "Active") {
+                                   if (filterValue === "Active") {
                                        return t.status === 0;
                                    }
-                                   if (state.filterValue === "Completed") {
+                                   if (filterValue === "Completed") {
                                        return t.status === 2;
                                    }
                                })}/>
-                <TodoListFooter onFilterChanged={onFilterChanged} filterValue={state.filterValue} />
+                <TodoListFooterFunctional onFilterChanged={onFilterChanged} filterValue={filterValue} />
             </div>
         );
 }
@@ -110,8 +111,6 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-
-
 
 const ConnectedTodoList = connect(null, mapDispatchToProps) (TodoListFunctional)
 

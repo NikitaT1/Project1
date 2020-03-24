@@ -17,7 +17,7 @@ const AppFunctional = (props) => {
         todolists: []
     }
 */
-    //const [todolists, setTitle] = useState(null)
+    const [todolists, setTitle] = useState(null)
 
     /*componentDidMount() {
         this.restoreState();
