@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import TodoListTask from "./TodoListTask";
 
-class TodoListTasks extends React.Component {
-    render = () => {
+const TodoListTasks = (props) => {
 
-        let tasksElements = this.props.tasks.map( task => <TodoListTask task={task} id={this.props.id}
-                                                                        onTaskStatusChanged={this.props.onTaskStatusChanged}
-                                                                        onTaskTitleChanged={this.props.onTaskTitleChanged}
-                                                                        delTaskCall={this.props.delTaskCall}
+
+        let tasksElements = props.tasks.map( task => <TodoListTask task={task} id={props.id}
+                                                                        onTaskStatusChanged={props.onTaskStatusChanged}
+                                                                        onTaskTitleChanged={props.onTaskTitleChanged}
+                                                                        delTaskCall={props.delTaskCall}
         />);
 
         return (
@@ -16,7 +16,7 @@ class TodoListTasks extends React.Component {
                 {tasksElements}
             </div>
         );
-    }
+
 }
 
 export default TodoListTasks;

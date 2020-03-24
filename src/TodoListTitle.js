@@ -5,25 +5,20 @@ import {delTodoListAC, delTodoListTC} from "./reducer";
 
 
 
-class TodoListTitle extends React.Component {
+const TodoListTitle = (props) => {
 
 
-    deleteTodolist = () => {
-          this.props.deleteTodolist(this.props.id)
+    const deleteTodolist = () => {
+          props.deleteTodolist(props.id)
     }
-
-
-    render = () => {
-
 
         return (
             <div>
-                <h3 className="todoList-header__title">{this.props.title} <button onClick={this.deleteTodolist}>X</button>
+                <h3 className="todoList-header__title">{props.title} <button onClick={deleteTodolist}>X</button>
                 </h3>
 
             </div>
         );
-    }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -8,7 +8,6 @@ class AddNewItemForm extends React.Component {
         title: ""
     };
 
-
     onAddItemClick = () => {
         let newText = this.state.title;
         if (newText === "") {

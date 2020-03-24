@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
@@ -9,55 +9,56 @@ import LoginApp from "./LoginApp";
 import TodoListFunctional from "./TodoListFunctional";
 import AddNewItemFormFunction from "./AddNewItemFormFunction";
 
-class App extends React.Component {
+const AppFunctional = (props) => {
 
-    nextTaskId = 5;
+    let nextTaskId = 5;
 
-    state = {
+   /* state = {
         todolists: []
     }
-    
-    addTodoList = (title) => {
-        this.props.addTodoList(title);
-    }
+*/
+    //const [todolists, setTitle] = useState(null)
 
-    componentDidMount() {
+    /*componentDidMount() {
         this.restoreState();
-    }
+    }*/
 
-    
+    useEffect(() => {
+        restoreState()})
 
-    componentDidUpdate(prevProps, prevState) {
+/*    componentDidUpdate(prevProps, prevState) {
         let prevIsAuth = prevProps.isAuth
         let isAuth = this.props.isAuth
         if (this.props.isAuth !== prevIsAuth) {
             this.props.setTodoLists();
         }
+    }*/
+
+    const restoreState = () => {
+        props.setTodoLists();
     }
 
-    restoreState = () => {
-        this.props.setTodoLists();
+    const addTodoList = (title) => {
+        props.addTodoList(title);
     }
 
-
-    render = () => {
-      /*  if (!this.props.isAuth) {
+/*
+        if (!props.isAuth) {
             return <div>
             <LoginApp />
             </div>
         }*/
-        const todoLists = this.props.todoLists.map(t => <TodoListFunctional id={t.id} title={t.title} tasks={t.tasks}/>)
+        const todoLists = props.todoLists.map(t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
         return (
             <>
                 <div>
-                    <AddNewItemFormFunction addItem={this.addTodoList}/>
+                    <AddNewItemFormFunction addItem={addTodoList}/>
                 </div>
                 <div className="App">
                     {todoLists}
                 </div>
             </>
         );
-    }
 }
 
 const mapStateToProps = (state) => {
@@ -79,6 +80,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(AppFunctional);
 export default ConnectedApp;
 

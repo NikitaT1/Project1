@@ -7,7 +7,7 @@ const LoginForm = (props) => {
         <form>
             <input placeholder="Имя"/>
             <input placeholder="e-mail"  />
-            <input  placeholder="message" />
+            <input placeholder="message" />
             <button>Send</button>
         </form>
     )

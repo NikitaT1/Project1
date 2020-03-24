@@ -3,19 +3,15 @@ import './App.css';
 import AddNewItemForm from "./AddNewItemForm";
 import TodoListTitle from "./TodoListTitle";
 
-class TodoListHeader extends React.Component {
-
-
-    render = () => {
-
+const TodoListHeader = (props) => {
 
         return (
             <div className="todoList-header">
-                <TodoListTitle title={this.props.title} id={this.props.id}/>
-                <AddNewItemForm addItem={this.props.onTaskAdded}/>
+                <TodoListTitle title={props.title} id={props.id}/>
+                <AddNewItemForm addItem={props.onTaskAdded}/>
             </div>
         );
-    }
+
 }
 
 export default TodoListHeader;
