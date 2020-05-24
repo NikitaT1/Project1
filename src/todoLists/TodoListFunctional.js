@@ -1,38 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import './App.css';
+import '../css/TodoList.css';
 import TodoListHeader from "./TodoListHeader";
 import TodoListTasks from "./TodoListTasks";
-import TodoListFooter from "./TodoListFooter";
 import {connect} from "react-redux"
-import {addTaskAC, addTaskTC, changeTaskAC, delTaskCallAC, delTaskCallTC, setTasksAC, setTasksTC} from "./reducer";
-import {api} from "./api";
+import {addTaskTC, changeTaskAC, delTaskCallTC, setTasksTC} from "../reducer";
+import {api} from "../api";
 import TodoListFooterFunctional from "./TodoListFooterFunctional";
+import TodoListTitle from "./TodoListTitle";
 
 
 const TodoListFunctional = (props) => {
 
-    /*constructor(props) {
-        super(props);
-        this.newTasksTitileRef = React.createRef();
-    };*/
-
-   /* componentDidMount() {
-        this.restoreState();
-    };*/
-
     useEffect(() => {
-        restoreState()
-    }, [])
-
-    const restoreState = () => {
-        props.setTasks(props.id)
-    };
+        if (props.id){
+            props.setTasks(props.id)
+        }
+    }, [props.id])
 
     const nextTaskId = 0;
-
-    /*const state = {
-        filterValue: "All"
-    };*/
 
     const [filterValue, setFilter] = useState("All")
 
@@ -59,7 +44,7 @@ const TodoListFunctional = (props) => {
         let newTask = {...task, ...obj}
         api.updateTasks(newTask)
             .then( (res) => {
-        props.updateTask (taskId, obj, props.id)
+        return props.updateTask (taskId, obj, props.id)
             })
     };
 
@@ -102,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         delTaskCall (todolistId, taskId) {
+            debugger
             const action = delTaskCallTC (todolistId, taskId)
             dispatch(action);
         },

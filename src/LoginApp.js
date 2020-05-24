@@ -23,7 +23,7 @@ const LoginApp = (props) => {
         props.LoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
-  /*  if(this.props.isAuth === true) return <Redirect to={"./App"}/>*/
+    if(props.isAuth) return <Redirect to={"./AppFunctional"}/>
     return (
         <div>
             {/*<Fade clear>*/}

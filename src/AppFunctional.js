@@ -1,64 +1,53 @@
 import React, {useState, useEffect} from 'react';
-import './App.css';
-import TodoList from "./TodoList";
-import AddNewItemForm from "./AddNewItemForm";
+import './css/App.css';
 import {connect} from "react-redux"
-import {addTodoAC, addTodoTC, setTodoListsAC, setTodoListsTC} from "./reducer";
-// import Login from "./Login";
-import LoginApp from "./LoginApp";
-import TodoListFunctional from "./TodoListFunctional";
+import {addTodoTC, setTodoListsTC} from "./reducer";
+import TodoListFunctional from "./todoLists/TodoListFunctional";
+import ListOfTodoLists from "./listOfTodoLists/ListOftodoLists";
 import AddNewItemFormFunction from "./AddNewItemFormFunction";
 
 const AppFunctional = (props) => {
 
     let nextTaskId = 5;
 
-   /* state = {
-        todolists: []
-    }
-*/
-    const [todolists, setTitle] = useState(null)
+    // const [todolists, setTitle] = useState(null)
 
-    /*componentDidMount() {
-        this.restoreState();
-    }*/
 
     useEffect(() => {
-        restoreState()})
-
-/*    componentDidUpdate(prevProps, prevState) {
-        let prevIsAuth = prevProps.isAuth
-        let isAuth = this.props.isAuth
-        if (this.props.isAuth !== prevIsAuth) {
-            this.props.setTodoLists();
-        }
-    }*/
-
-    const restoreState = () => {
         props.setTodoLists();
-    }
+        // if(props.isAuth) {
+        //     props.setTodoLists();
+        // }
+    }, [])
 
     const addTodoList = (title) => {
         props.addTodoList(title);
     }
 
-/*
-        if (!props.isAuth) {
-            return <div>
-            <LoginApp />
+
+    // if (!props.isAuth) {
+    //     return <div>
+    //         <LoginApp/>
+    //     </div>
+    // }
+
+    const todoLists = props.todoLists.map(t => <TodoListFunctional id={t.id} title={t.title} tasks={t.tasks}/>)
+    const listOftodoLists = props.todoLists.map(m => <ListOfTodoLists id={m.id} title={m.title} tasks={m.tasks}/>)
+    return (
+        <div className="App">
+            <div className="Header">
+                <AddNewItemFormFunction addItem={addTodoList}/>
             </div>
-        }*/
-        const todoLists = props.todoLists.map(t => <TodoList id={t.id} title={t.title} tasks={t.tasks}/>)
-        return (
-            <>
-                <div>
-                    <AddNewItemFormFunction addItem={addTodoList}/>
+            <div className="Main">
+                <div className="ListOftodoLists">
+                    {listOftodoLists}
                 </div>
-                <div className="App">
+                <div className="todoLists">
                     {todoLists}
                 </div>
-            </>
-        );
+            </div>
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => {

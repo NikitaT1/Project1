@@ -1,0 +1,48 @@
+
+.newTaskForm{
+  display: flex;
+  flex-direction: row;
+
+
+}
+
+button#button {
+  background-color: white;
+  color: lightgreen;
+  font-size: large;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.error {
+  border-color: red;
+}
+.no-error {
+  padding-right: 30px;
+}
+
+
+.frame {
+position:relative;
+background: linear-gradient(21deg, #10abff, #1beabd);
+padding: 3px;
+display: inline-block;
+border-radius: 9999em;
+
+   /**:not(span) {*/
+   /*  position: relative;*/
+   /*  display: inherit;*/
+   /*  border-radius: inherit;*/
+   /*  margin: 0;*/
+   /*  border: none;*/
+   /*  outline: none;*/
+   /*  padding: 0 .325em;*/
+   /*  z-index: 1;*/
+	/*	&:focus + span {*/
+   /*  opacity: 1;*/
+   /*  transform: scale(1);*/
+   /*}*/
+}
+
+
+

@@ -1,0 +1,58 @@
+.todoList {
+  display: flex;
+  flex-direction: column;
+  margin-top: .9rem;
+  margin-left: .9rem;
+  margin-right: .9rem;
+  margin-bottom: .9rem;
+  background-color: skyblue;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  padding: .4em;
+}
+
+.listOfTasks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.filter-active {
+  background-color: lightsalmon;
+}
+
+.todoListHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.todoList-task.done {
+  opacity: 0.5;
+}
+
+button#todolistDel{
+  background-color: white;
+  color: lightcoral;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+button#delTask{
+  background-color: white;
+  color: lightcoral;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+
+
+/*input[type=text] {*/
+/*  width: 130px;*/
+/*  -webkit-transition: width 0.5s ease-in-out;*/
+/*  transition: width 0.5s ease-in-out;*/
+/*}*/
+
+/*input[type=text]:focus {*/
+/*  width: 80%;*/
+/*}*/

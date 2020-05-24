@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+
+
 
 class TodoListTask extends React.Component {
 
@@ -31,7 +32,7 @@ class TodoListTask extends React.Component {
         this.props.delTaskCall(this.props.id, this.props.task.id)
     }
 
-
+     // {this.props.task.priority}
 
 
     render = () => {
@@ -39,6 +40,7 @@ class TodoListTask extends React.Component {
         let checked = this.props.task.status === 2 ? "todoList-task done" : "todoList-task";
 
         return (
+            <div className="listOfTasks">
             <div className={checked}>
                 <input type="checkbox" checked={this.props.task.status === 2}
                        onChange={this.onIsDoneChanged}/>
@@ -46,8 +48,9 @@ class TodoListTask extends React.Component {
                                               autoFocus={true} value={this.state.taskTitle}
                                               onChange={this.onTitleChanged}/> :
                     <span onClick={this.activateEditMode}>
-                   {/* {this.props.task.id} -*/} {this.props.task.title}</span>},
-                priority: {this.props.task.priority} <button onClick={this.delTask}>X</button>
+                   {this.props.task.title}</span>}
+               </div>
+        <button id="delTask" onClick={this.delTask}>X</button>
             </div>
         );
     }

@@ -1,0 +1,42 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.Header {
+  display: flex;
+  padding: .9rem;
+  justify-content: center;
+}
+
+.Main {
+  display: flex;
+}
+
+.ListOftodoLists {
+  display: flex;
+  flex-direction: column;
+  margin-top: .9rem;
+  margin-left: .9rem;
+  margin-right: .9rem;
+  margin-bottom: .9rem;
+  background-color: lightgreen;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  padding: .4em;
+}
+
+.todoLists {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  padding: 15px
+}
+
+
+
+
+
+
+
+
+

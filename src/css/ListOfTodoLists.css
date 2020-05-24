@@ -1,0 +1,34 @@
+.ListMain {
+  display: flex;
+  min-width: 150px;
+  padding: 0.9%;
+  flex-direction: column;
+}
+
+.List {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.Title {
+  padding: .4em;
+}
+
+button#buttonDel {
+  background-color: white;
+  color: lightcoral;
+  font-size: large;
+  cursor: pointer;
+  border-radius: 50%;
+
+
+}
+
+
+
+
+
+
+

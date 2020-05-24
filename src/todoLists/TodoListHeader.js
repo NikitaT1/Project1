@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
-import AddNewItemForm from "./AddNewItemForm";
+import '../css/TodoList.css';
+import AddNewItemFormFunction from "../AddNewItemFormFunction";
 import TodoListTitle from "./TodoListTitle";
 
 const TodoListHeader = (props) => {
 
         return (
-            <div className="todoList-header">
+            <div>
                 <TodoListTitle title={props.title} id={props.id}/>
-                <AddNewItemForm addItem={props.onTaskAdded}/>
+                <AddNewItemFormFunction addItem={props.onTaskAdded}/>
             </div>
         );
 

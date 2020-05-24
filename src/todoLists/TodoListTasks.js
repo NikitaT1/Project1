@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import TodoListTask from "./TodoListTask";
 
 const TodoListTasks = (props) => {
@@ -12,7 +11,7 @@ const TodoListTasks = (props) => {
         />);
 
         return (
-            <div className="todoList-tasks">
+            <div>
                 {tasksElements}
             </div>
         );
