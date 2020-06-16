@@ -9,8 +9,12 @@
   justify-content: center;
 }
 
+
 .Main {
   display: flex;
+  flex-basis: auto;
+  box-sizing: content-box
+
 }
 
 .ListOftodoLists {
@@ -23,6 +27,8 @@
   background-color: lightgreen;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
   padding: .4em;
+  min-width: 15em;
+  min-height: 20em;
 }
 
 .todoLists {

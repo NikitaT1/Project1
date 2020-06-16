@@ -46,6 +46,7 @@ const TodoListFunctional = (props) => {
             .then( (res) => {
         return props.updateTask (taskId, obj, props.id)
             })
+            .catch((err)=> console.log(err))
     };
 
     const delTaskCall = (todolistId, taskId) => {
@@ -87,7 +88,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         delTaskCall (todolistId, taskId) {
-            debugger
             const action = delTaskCallTC (todolistId, taskId)
             dispatch(action);
         },

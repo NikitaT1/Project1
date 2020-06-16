@@ -3,6 +3,7 @@
   min-width: 150px;
   padding: 0.9%;
   flex-direction: column;
+
 }
 
 .List {
@@ -19,11 +20,9 @@
 button#buttonDel {
   background-color: white;
   color: lightcoral;
-  font-size: large;
+  font-size: medium;
   cursor: pointer;
   border-radius: 50%;
-
-
 }
 
 

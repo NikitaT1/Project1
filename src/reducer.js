@@ -25,22 +25,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 todoLists: action.todolists.map(tl => ({...tl, tasks: []}))
-               /* todoLists: action.todolists.map( (tl)=> {
-                    let filterdTasks = state.tasks.filter( (task)=> {
-                        return task.todoListId === tl.id
-                    } )
-                    return {...tl, tasks: filterdTasks}
-                } )*/
-
             }
-
-
         case SET_TASKS:
-            /*return {
-                ...state,
-                tasks: [...state.tasks, ...action.allTasks]
-            }*/
-
         return {
             ... state, todoLists: state.todoLists.map(tl => {
                 if (tl.id === action.todoListId) {
@@ -202,17 +188,15 @@ export const delTodoListTC = (todolistId) => (dispatch) => {
 }
 
 export const onTodoListTitleChangedTC = (todolistId, todolistNewTitle) => (dispatch) => {
-    debugger
     api.updateTodoList (todolistId, todolistNewTitle)
         .then((res) => {
-            debugger
             dispatch(onTodoListTitleChangedAC(todolistId, todolistNewTitle))
         })
 }
 
 export const addTodoTC = (title) => (dispatch) => {
     api.createTodoList(title)
-        .then(res => {
+        .then((res) => {
             let newTodoList = res.data.item;
             dispatch(addTodoAC(newTodoList))
         })
@@ -221,19 +205,18 @@ export const addTodoTC = (title) => (dispatch) => {
 
 export const delTaskCallTC = (todolistId, taskId) => (dispatch) => {
     api.deleteTask(todolistId, taskId)
-        .then(res => {
-            debugger
+        .then((res) => {
             dispatch(delTaskCallAC(todolistId, taskId))
         })
         .catch( error => { console.log(error)});
 }
 
-/*export const changeTaskTC = (taskId, obj, todolistId, newTask) => (dispatch) => {
-    api.updateTasks(newTask)
-        .then( (res) => {
-            dispatch(changeTaskAC(taskId, obj, todolistId, newTask))
-        })
-}*/
+// export const changeTaskTC = (taskId, obj, todolistId, newTask) => (dispatch) => {
+//     api.updateTasks(newTask)
+//         .then( (res) => {
+//             dispatch(changeTaskAC(taskId, obj, todolistId, newTask))
+//         })
+// }
 
 export const addTaskTC = (todoListId, newText) => (dispatch) => {
     api.createTask(todoListId, newText)
@@ -251,6 +234,9 @@ export const setTasksTC = (tasksId) => (dispatch) => {
             dispatch(setTasksAC(allTasks, tasksId))
         });
 }
+
+
+
 
 export const LoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
     loginAPI.login(email, password, rememberMe, captcha)

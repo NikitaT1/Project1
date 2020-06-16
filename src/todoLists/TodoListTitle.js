@@ -32,14 +32,12 @@ const TodoListTitle = (props) => {
 
         return (
             <div className="todoListHeader">
-                <h3 id="todolistDelButton"><button id="todolistDel" onClick={deleteTodolist}>X</button></h3>
+                <div id="todolistDelButton"><button id="todolistDel" onClick={deleteTodolist}>X</button></div>
                 {editMode ? <input onBlur={deactivateEditMode}
                                    autoFocus={true}
                                    value={todoListTitle} onChange={e => setTodoListTitle(e.target.value)}/> :
                     <span onClick={activateEditMode}>
                    {props.title}</span>}
-
-
             </div>
         );
 }

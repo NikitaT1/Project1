@@ -5,8 +5,11 @@ import './css/AddNewItemForm.css';
 const AddNewItemFormFunction = (props) => {
 
     const [errorState, setError] = useState(false)
+    const [title, setTitle] = useState('')
 
-    const [title, setTitle] = useState(null)
+    // useEffect(() => {
+    //     setTitle(null)
+    // })
 
     const onAddItemClick = () => {
         if (!title) {
@@ -15,10 +18,9 @@ const AddNewItemFormFunction = (props) => {
         else {
             setError(false);
             props.addItem(title);
-            setTitle(null)
+            setTitle('')
             }
     };
-
 
     const onTitleChanged = (e) => {
        setError(false);
@@ -27,20 +29,17 @@ const AddNewItemFormFunction = (props) => {
 
     const onKeyPress= (e)=> {
         if (e.key === "Enter") {
-            onAddItemClick()
+            setTitle(e.currentTarget.value)
         }
     }
 
-
-
          let error = errorState ? "error" : "no-error";
-
-
+debugger
         return (
             <div className="newTaskForm">
                 <div>
                     <input className={error} type="text" placeholder="New task name" onChange={onTitleChanged}
-                            onKeyPress={onKeyPress} value={setTitle.title}/>
+                            onKeyPress={onKeyPress} value={title}/>
                 </div>
                 <div >
                     <button id="button" onClick={onAddItemClick}>+</button>
