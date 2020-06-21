@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './css/AddNewItemForm.css';
+import { Button, DatePicker} from 'antd';
+import { Input } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons'
 
 
 const AddNewItemFormFunction = (props) => {
@@ -38,11 +41,16 @@ debugger
         return (
             <div className="newTaskForm">
                 <div>
-                    <input className={error} type="text" placeholder="New task name" onChange={onTitleChanged}
+                    <Input className={error} type="text" placeholder="New task name" onChange={onTitleChanged}
                             onKeyPress={onKeyPress} value={title}/>
                 </div>
                 <div >
-                    <button id="button" onClick={onAddItemClick}>+</button>
+                    {/*<button id="button" onClick={onAddItemClick}>+</button>*/}
+                    {/*<>*/}
+                    {/*    <Button type="primary">PRESS ME</Button>*/}
+                    {/*    <DatePicker placeholder="select date" />*/}
+                    {/*</>*/}
+                    <PlusCircleOutlined style={{ fontSize: '1.9em', color: '#08c' }} onClick={onAddItemClick}/>
                 </div>
             </div>
         )

@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import {delTodoListTC, onTodoListTitleChangedTC} from "../reducer";
 import {useState, useEffect} from 'react';
 import '../css/ListOfTodoLists.css'
+import {CloseCircleOutlined} from "@ant-design/icons";
 
 const ListOftodoLists = (props) => {
 
@@ -32,10 +33,7 @@ const ListOftodoLists = (props) => {
                     <span onClick={activateEditMode}>
                    {props.title}</span>}
             </div>
-
-
-
-            <button id="buttonDel" onClick={deleteTodolist}>X</button>
+                <CloseCircleOutlined style={{ fontSize: '1.7em', color: '#FF8C00'}} onClick={deleteTodolist}/>
             </div>
     </div>
     )

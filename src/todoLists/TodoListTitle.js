@@ -3,6 +3,8 @@ import {connect} from "react-redux"
 import {delTodoListTC} from "../reducer";
 import {onTodoListTitleChangedTC} from "../reducer";
 import TodoList from "../css/TodoList.css"
+import 'antd/dist/antd.css';
+import { CloseCircleOutlined } from '@ant-design/icons'
 
 
 
@@ -32,7 +34,9 @@ const TodoListTitle = (props) => {
 
         return (
             <div className="todoListHeader">
-                <div id="todolistDelButton"><button id="todolistDel" onClick={deleteTodolist}>X</button></div>
+                <div id="todolistDelButton">
+                    <CloseCircleOutlined style={{ fontSize: '1.7em', color: '#FF8C00' }} onClick={deleteTodolist}/>
+                </div>
                 {editMode ? <input onBlur={deactivateEditMode}
                                    autoFocus={true}
                                    value={todoListTitle} onChange={e => setTodoListTitle(e.target.value)}/> :

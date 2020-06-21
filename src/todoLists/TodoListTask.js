@@ -1,4 +1,9 @@
 import React from 'react';
+import 'antd/dist/antd.css';
+import { CloseOutlined } from '@ant-design/icons'
+import { Checkbox } from 'antd';
+import { Input } from 'antd';
+
 
 
 
@@ -44,13 +49,14 @@ class TodoListTask extends React.Component {
             <div className={checked}>
                 <input type="checkbox" checked={this.props.task.status === 2}
                        onChange={this.onIsDoneChanged}/>
+                {/*<Checkbox onChange={this.onIsDoneChanged} checked={this.props.task.status === 2}>Checkbox</Checkbox>*/}
                 {this.state.editMode ? <input onBlur={this.deactivateEditMode}
                                               autoFocus={true} value={this.state.taskTitle}
                                               onChange={this.onTitleChanged}/> :
                     <span onClick={this.activateEditMode}>
                    {this.props.task.title}</span>}
                </div>
-        <button id="delTask" onClick={this.delTask}>X</button>
+        <CloseOutlined style={{ fontSize: '1.1em', color: '#FF8C00'}} onClick={this.delTask} />
             </div>
         );
     }

@@ -6,7 +6,7 @@
 
 }
 
-button#button {
+.button {
   background-color: white;
   color: lightgreen;
   font-size: large;

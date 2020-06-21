@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://nikitat1.github.io/Project1/",
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
+    "antd": "^4.3.5",
     "axios": "^0.19.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
